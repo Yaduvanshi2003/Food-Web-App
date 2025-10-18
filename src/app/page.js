@@ -1,103 +1,453 @@
+"use client"
+// import { useEffect, useState, useRef } from "react";
+// import CastumerHeader from "@/_components/CastumerHader";
+// import Footer from "@/_components/Footer";
+// import Image from "next/image";
+// export default function Home() {
+//   const [data, setData] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [search, setSearch] = useState("");
+//   const [showDropdownPlace, setShowDropdownPlace] = useState(false);
+//   const [foodSearch, setFoodSearch] = useState("");
+//   const [showDropdownFood, setShowDropdownFood] = useState(false);
+
+//   const placeRef = useRef(null);
+//   const foodRef = useRef(null);
+
+//   useEffect(() => {
+//     loadLocation();
+//   }, []);
+
+//   const loadLocation = () => {
+//     setLoading(true);
+//     setTimeout(() => {
+//       const userData = JSON.parse(localStorage.getItem("food")) || [];
+//       setData(userData);
+//       setLoading(false);
+//     }, 800);
+
+//     console.log("Lakshay Ji", data);
+
+//   };
+
+
+
+//   const filteredData = data.filter((item) =>
+//     item.City?.toLowerCase().includes(search.toLowerCase())
+//   );
+//   const uniqueCities = Array.from(new Set(filteredData.map(item => item.City)));
+
+//   const handleSelectPlace = (city) => {
+//     setSearch(city);
+//     setShowDropdownPlace(false);
+//   };
+
+
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       if (placeRef.current && !placeRef.current.contains(event.target)) {
+//         setShowDropdownPlace(false);
+//       }
+//       if (foodRef.current && !foodRef.current.contains(event.target)) {
+//         setShowDropdownFood(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+
+//   }, []);
+
+//   const filteredFood = data
+//     .filter((item) =>
+//       item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
+//     )
+//     .slice(0, 10);
+
+
+
+//   return (
+//     <main className="min-h-screen bg-cover bg-center flex flex-col" style={{ backgroundImage: "url('/food-bg.jpg')" }}>
+//       <CastumerHeader />
+
+//       <div className="flex flex-col items-center justify-center flex-grow bg-black/40 backdrop-blur-sm py-20 px-6 bg-[url('/123.jpg')] bg-cover bg-center h-screen">
+//         <div className="transform -translate-y-10 md:-translate-y-16">
+//           <h1 className="text-5xl md:text-6xl font-extrabold text-orange-600 animate-wave mb-12 text-center drop-shadow-lg">
+//             🍕 Discover Your Favorite Food
+//           </h1>
+
+//           {loading ? (
+//             <div className="flex justify-center items-center py-10">
+//               <div className="text-orange-500 text-xl font-semibold animate-pulse">
+//                 Loading delicious items...
+//               </div>
+//             </div>
+//           ) : (
+//             <div className="bg-white/30 backdrop-blur-lg border border-orange-300 shadow-2xl rounded-3xl p-10 flex flex-col md:flex-row gap-8 items-center justify-center w-full max-w-5xl">
+
+//               <div className="relative w-full md:w-1/2" ref={placeRef}>
+//                 <input
+//                   type="text"
+//                   value={search}
+//                   onChange={(e) => {
+//                     setSearch(e.target.value);
+//                     setShowDropdownPlace(true);
+//                   }}
+//                   onFocus={() => setShowDropdownPlace(true)}
+//                   placeholder="Select Place"
+//                   className="px-6 py-4 w-full text-lg rounded-xl border border-orange-400 bg-white/70 shadow-inner focus:ring-4 focus:ring-orange-500 outline-none text-gray-800 placeholder-gray-500 transition"
+//                 />
+//                 {showDropdownPlace && uniqueCities.length > 0 && (
+//                   <ul className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 max-h-56 overflow-y-auto z-10">
+//                     {/* {filteredData.map((item, index) => (
+//                       <li
+//                         key={index}
+//                         onClick={() => handleSelectPlace(item.City)}
+//                         className="px-4 py-2 cursor-pointer hover:bg-orange-100 transition text-gray-800 font-medium"
+//                       >
+//                         {item.City}
+//                       </li>
+//                     ))} */}
+//                     {uniqueCities.map((city, index) => (
+//                       <li
+//                         key={index}
+//                         onClick={() => handleSelectPlace(city)}
+//                         className="px-4 py-2 cursor-pointer hover:bg-orange-100 transition text-gray-800 font-medium"
+//                       >
+//                         {city}
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 )}
+//                 {showDropdownPlace && uniqueCities.length === 0 && (
+//                   <div className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 p-3 text-gray-600 text-center">
+//                     No places found
+//                   </div>
+//                 )}
+//               </div>
+
+
+
+//               <div className="relative w-full md:w-1/2" ref={foodRef}>
+//                 <input
+//                   type="text"
+//                   value={foodSearch}
+//                   onChange={(e) => {
+//                     setFoodSearch(e.target.value);
+//                     setShowDropdownFood(true);
+//                   }}
+//                   onFocus={() => setShowDropdownFood(true)}
+//                   placeholder="Enter food or restaurant name"
+//                   className="px-6 py-4 w-full text-lg rounded-xl border border-orange-400 bg-white/70 shadow-inner focus:ring-4 focus:ring-orange-500 outline-none text-gray-800 placeholder-gray-500 transition"
+//                 />
+
+//                 {showDropdownFood && filteredFood.length > 0 && (
+//                   <ul className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 max-h-56 overflow-y-auto z-10">
+//                     {filteredFood.map((item, index) => (
+//                       <li
+//                         key={index}
+//                         onClick={() => {
+//                           setFoodSearch(item.Name);
+//                           setShowDropdownFood(false);
+//                         }}
+//                         className="px-4 py-2 cursor-pointer hover:bg-orange-100 transition text-gray-800 font-medium"
+//                       >
+//                         {item.Name}
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 )}
+
+//                 {showDropdownFood && filteredFood.length === 0 && (
+//                   <div className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 p-3 text-gray-600 text-center">
+//                     No food found
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+      
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100">
+//   {data.map((item, index) => (
+
+// <div
+//   key={index}
+//   className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex justify-between items-center"
+// >
+
+//   <div className="flex flex-col space-y-3">
+//     <h1 className="text-2xl font-semibold text-green-600">
+//        {item.Name}
+//     </h1>
+//     <h2 className="text-gray-700">Location: {item.City}</h2>
+
+
+//     <div className="flex items-center space-x-2">
+//       <span className="text-gray-700 font-medium">Contact:</span>
+//       <span className="text-gray-600">{item.Contact}</span>
+//     </div>
+
+//     <h3 className="text-lg font-medium text-red-500">
+//       Price:₹ {item.Price}
+//     </h3>
+//   </div>
+
+  
+//   <div className="ml-6">
+//     <Image
+//       src={item.Image?.startsWith("/") ? item.Image : "/burger.png"}
+//       width={190}
+//       height={100}
+//       alt={item.Name || "Food"}
+//       className="w-24 h-24 rounded-lg object-cover shadow-sm"
+//     />
+//   </div>
+// </div>
+
+//   ))}
+// </div>
+
+//       <Footer />
+//     </main>
+//   );
+// }
+
+"use client";
+import { useEffect, useState, useRef } from "react";
+import CastumerHeader from "@/_components/CastumerHader";
+import Footer from "@/_components/Footer";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [foodSearch, setFoodSearch] = useState("");
+  const [showDropdownPlace, setShowDropdownPlace] = useState(false);
+  const [showDropdownFood, setShowDropdownFood] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const placeRef = useRef(null);
+  const foodRef = useRef(null);
+
+  useEffect(() => {
+    loadLocation();
+  }, []);
+
+  const loadLocation = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const userData = JSON.parse(localStorage.getItem("food")) || [];
+      setData(userData);
+      setLoading(false);
+    }, 800);
+  };
+
+  // Filter unique cities from entire data for dropdown
+  const uniqueCities = Array.from(new Set(data.map(item => item.City)));
+
+  // Filter restaurants based on the selected place (search input)
+  const filteredRestaurants = search
+    ? data.filter(item =>
+        item.City?.toLowerCase().includes(search.toLowerCase())
+      )
+    : data;
+
+  // Filter food names for food search dropdown (top 10 results)
+  const filteredFood = data
+    .filter(item =>
+      item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
+    )
+    .slice(0, 10);
+
+  const handleSelectPlace = (city) => {
+    setSearch(city);
+    setShowDropdownPlace(false);
+  };
+
+  const handleSelectFood = (foodName) => {
+    setFoodSearch(foodName);
+    setShowDropdownFood(false);
+  };
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (placeRef.current && !placeRef.current.contains(event.target)) {
+        setShowDropdownPlace(false);
+      }
+      if (foodRef.current && !foodRef.current.contains(event.target)) {
+        setShowDropdownFood(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <main
+      className="min-h-screen bg-cover bg-center flex flex-col"
+      style={{ backgroundImage: "url('/food-bg.jpg')" }}
+    >
+      <CastumerHeader />
+
+      <div className="flex flex-col items-center justify-center flex-grow bg-black/40 backdrop-blur-sm py-20 px-6 bg-[url('/123.jpg')] bg-cover bg-center h-screen">
+        <div className="transform -translate-y-10 md:-translate-y-16">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-orange-600 animate-wave mb-12 text-center drop-shadow-lg">
+            🍕 Discover Your Favorite Food
+          </h1>
+
+          {loading ? (
+            <div className="flex justify-center items-center py-10">
+              <div className="text-orange-500 text-xl font-semibold animate-pulse">
+                Loading delicious items...
+              </div>
+            </div>
+          ) : (
+            <div className="bg-white/30 backdrop-blur-lg border border-orange-300 shadow-2xl rounded-3xl p-10 flex flex-col md:flex-row gap-8 items-center justify-center w-full max-w-5xl">
+              {/* Select Place Input and Dropdown */}
+              <div className="relative w-full md:w-1/2" ref={placeRef}>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setShowDropdownPlace(true);
+                  }}
+                  onFocus={() => setShowDropdownPlace(true)}
+                  placeholder="Select Place"
+                  className="px-6 py-4 w-full text-lg rounded-xl border border-orange-400 bg-white/70 shadow-inner focus:ring-4 focus:ring-orange-500 outline-none text-gray-800 placeholder-gray-500 transition"
+                />
+                {showDropdownPlace && uniqueCities.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 max-h-56 overflow-y-auto z-10">
+                    {uniqueCities
+                      .filter(city =>
+                        city.toLowerCase().includes(search.toLowerCase())
+                      )
+                      .map((city, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleSelectPlace(city)}
+                          className="px-4 py-2 cursor-pointer hover:bg-orange-100 transition text-gray-800 font-medium"
+                        >
+                          {city}
+                        </li>
+                      ))}
+                  </ul>
+                )}
+                {showDropdownPlace && uniqueCities.length === 0 && (
+                  <div className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 p-3 text-gray-600 text-center">
+                    No places found
+                  </div>
+                )}
+              </div>
+
+              {/* Enter Food Input and Dropdown */}
+              <div className="relative w-full md:w-1/2" ref={foodRef}>
+                <input
+                  type="text"
+                  value={foodSearch}
+                  onChange={(e) => {
+                    setFoodSearch(e.target.value);
+                    setShowDropdownFood(true);
+                  }}
+                  onFocus={() => setShowDropdownFood(true)}
+                  placeholder="Enter food or restaurant name"
+                  className="px-6 py-4 w-full text-lg rounded-xl border border-orange-400 bg-white/70 shadow-inner focus:ring-4 focus:ring-orange-500 outline-none text-gray-800 placeholder-gray-500 transition"
+                />
+                {showDropdownFood && filteredFood.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 max-h-56 overflow-y-auto z-10">
+                    {filteredFood.map((item, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSelectFood(item.Name)}
+                        className="px-4 py-2 cursor-pointer hover:bg-orange-100 transition text-gray-800 font-medium"
+                      >
+                        {item.Name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {showDropdownFood && filteredFood.length === 0 && (
+                  <div className="absolute top-full left-0 w-full bg-white/90 border border-orange-300 rounded-xl shadow-lg mt-2 p-3 text-gray-600 text-center">
+                    No food found
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* Filtered Restaurant Grid based on selected place */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100">
+        {filteredRestaurants.length > 0 ? (
+          filteredRestaurants.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex justify-between items-center"
+            >
+              <div className="flex flex-col space-y-3 max-w-[70%]">
+                <h1 className="text-2xl font-semibold text-green-600">
+                  {item.Name}
+                </h1>
+                <h2 className="text-gray-700">Location: {item.City}</h2>
+
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-700 font-medium">Contact:</span>
+                  <span className="text-gray-600">{item.Contact}</span>
+                </div>
+
+                <h3 className="text-lg font-medium text-red-500">
+                  Price: ₹{item.Price}
+                </h3>
+              </div>
+
+              <div className="ml-6 flex-shrink-0">
+                <Image
+                  src={item.Image?.startsWith("/") ? item.Image : "/burger.png"}
+                  width={96}
+                  height={96}
+                  alt={item.Name || "Food"}
+                  className="w-24 h-24 rounded-lg object-cover shadow-sm"
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-700 col-span-full">
+            No restaurants found in "{search}"
+          </p>
+        )}
+      </div>
+
+      <Footer />
+
+      <style jsx>{`
+        @keyframes wave {
+          0% {
+            color: #fb923c;
+            text-shadow: 0 0 10px #fb923c, 0 0 20px #f97316;
+          }
+          50% {
+            color: #ea580c;
+            text-shadow: 0 0 30px #fb923c, 0 0 50px #f97316;
+          }
+          100% {
+            color: #fb923c;
+            text-shadow: 0 0 10px #fb923c, 0 0 20px #f97316;
+          }
+        }
+
+        .animate-wave {
+          animation: wave 2s ease-in-out infinite;
+        }
+      `}</style>
+    </main>
   );
 }
+
