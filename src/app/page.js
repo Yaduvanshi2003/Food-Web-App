@@ -420,7 +420,7 @@ export default function Home() {
           ))
         ) : (
           <p className="text-center text-gray-700 col-span-full">
-            No restaurants found in "{search}"
+            No restaurants found in {search}
           </p>
         )}
       </div>
