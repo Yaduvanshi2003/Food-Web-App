@@ -5,15 +5,17 @@ import { useEffect, useState, useRef } from "react";
 import CastumerHeader from "@/_components/CastumerHader";
 import Footer from "@/_components/Footer";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Home(item = { item }) {
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [foodSearch, setFoodSearch] = useState("");
   const [showDropdownPlace, setShowDropdownPlace] = useState(false);
   const [showDropdownFood, setShowDropdownFood] = useState(false);
-
+  const router = useRouter();
   const placeRef = useRef(null);
   const foodRef = useRef(null);
 
@@ -33,18 +35,18 @@ export default function Home() {
 
   const uniqueCities = Array.from(new Set(data.map(item => item.City)));
 
-  
-const filteredRestaurants = data.filter(item => {
-  const matchCity = search
-    ? item.City?.toLowerCase().includes(search.toLowerCase())
-    : true;
 
-  const matchFood = foodSearch
-    ? item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
-    : true;
+  const filteredRestaurants = data.filter(item => {
+    const matchCity = search
+      ? item.City?.toLowerCase().includes(search.toLowerCase())
+      : true;
 
-  return matchCity && matchFood;
-});
+    const matchFood = foodSearch
+      ? item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
+      : true;
+
+    return matchCity && matchFood;
+  });
 
 
 
@@ -101,7 +103,7 @@ const filteredRestaurants = data.filter(item => {
             </div>
           ) : (
             <div className="bg-white/30 backdrop-blur-lg border border-orange-300 shadow-2xl rounded-3xl p-10 flex flex-col md:flex-row gap-8 items-center justify-center w-full max-w-5xl">
-              
+
               <div className="relative w-full md:w-1/2" ref={placeRef}>
                 <input
                   type="text"
@@ -174,19 +176,24 @@ const filteredRestaurants = data.filter(item => {
         </div>
       </div>
 
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100 ">
         {filteredRestaurants.length > 0 ? (
           filteredRestaurants.map((item, index) => (
+
             <div
+              onClick={() => router.push('Explore/' + item.Resname + "?food=" +item.Name )}
               key={index}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex justify-between items-center"
+              className="bg-white cursor-pointer rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex justify-between items-center w-full"
             >
-              <div className="flex flex-col space-y-3 max-w-[70%]">
-                <h1 className="text-2xl font-semibold text-green-600">
-                  {item.Name}
+              <div className="flex flex-col space-y-1 max-w-[75%]">
+                <h1 className="text-xl font-bold text-orange-700 tracking-wide">
+                  {item.Resname}
                 </h1>
-                <h2 className="text-gray-700">Location: {item.City}</h2>
+                <h2 className="text-lg font-semibold text-green-600">
+                  {item.Name}
+                </h2>
+                <h3 className="text-gray-700 font-medium">Location: {item.City}</h3>
 
                 <div className="flex items-center space-x-2">
                   <span className="text-gray-700 font-medium">Contact:</span>
@@ -208,6 +215,7 @@ const filteredRestaurants = data.filter(item => {
                 />
               </div>
             </div>
+
           ))
         ) : (
           <p className="text-center text-gray-700 col-span-full">

@@ -251,16 +251,16 @@ export default function FooditemsList() {
   const [editedItem, setEditedItem] = useState({});
 
   const defaultItems = [
-    { S_No: "1", Name: "Burger", Price: "199", Image: "/burger.png",Contact:"9998775265", City: "Gurugram", Description: "Delicious cheeseburger with fries 🍔" },
-    { S_No: "2", Name: "Briyani", Price: "349", Image: "/briyani.png",Contact:"9998775265", City: "Delhi", Description: "Aromatic biryani rice with spices and herbs 🍗" },
-    { S_No: "3", Name: "Pizza", Price: "399", Image: "/pizza.jpg",Contact:"9998775265", City: "Faridabad", Description: "Cheesy pizza with fresh toppings and crispy crust 🍕" },
-    { S_No: "4", Name: "Poori", Price: "299", Image: "/poori.jpg",Contact:"9998775265", City: "Gurugram", Description: "Crispy golden poori served with potato curry 🫓" },
-    { S_No: "5", Name: "Cake", Price: "599", Image: "/cake.jpg",Contact:"9998775265", City: "Faridabad", Description: "Delicious creamy cake with chocolate frosting 🍰" },
-    { S_No: "6", Name: "Samosa", Price: "599", Image: "/somasa.jpg",Contact:"9998775265", City: "Gurugram", Description: "Crispy golden triangles filled with spicy potatoes 🥔" },
-    { S_No: "7", Name: "Noodle", Price: "199", Image: "/chomin.jpg",Contact:"9998775265", City: "Delhi", Description: "Soft and tangy noodles tossed with fresh veggies 🍜" },
-    { S_No: "8", Name: "Ice cream", Price: "599", Image: "/ice-cream.jpg",Contact:"9998775265", City: "Faridabad", Description: "Chilled scoops of creamy sweetness 🍫 " },
-    { S_No: "9", Name: "Raj kachori", Price: "599", Image: "/raj kachori.jpg",Contact:"8933587877", City: "Gurugram", Description: "Crispy shell filled with tangy curd and chutneys 🥗" },
-    { S_No: "10",Name: "Manchurian", Price: "599", Image: "/manchurian.jpg",Contact:"9865745421", City: " Delhi", Description: "Crispy veggie balls in flavorful Indo- Chinese sauce 🍲" },
+    { S_No: "1", Resname: "KFC", Name: "Burger", Price: "199", Image: "/burger.png", Contact: "9998775265", City: "Gurugram", Description: "Delicious cheeseburger with fries 🍔" },
+    { S_No: "2", Resname: "Biryani By kilo", Name: "Briyani", Price: "349", Image: "/briyani.png", Contact: "9998775265", City: "Delhi", Description: "Aromatic biryani rice with spices and herbs 🍗" },
+    { S_No: "3", Resname: "Domino's", Name: "Pizza", Price: "399", Image: "/pizza.jpg", Contact: "9998775265", City: "Faridabad", Description: "Cheesy pizza with fresh toppings and crispy crust 🍕" },
+    { S_No: "4", Resname: "Punjab Grill", Name: "Poori", Price: "299", Image: "/poori.jpg", Contact: "9998775265", City: "Gurugram", Description: "Crispy golden poori served with potato curry 🫓" },
+    { S_No: "5", Resname: "Bikanervala", Name: "Cake", Price: "599", Image: "/cake.jpg", Contact: "9998775265", City: "Faridabad", Description: "Delicious creamy cake with chocolate frosting 🍰" },
+    { S_No: "6", Resname: "Haldiram's", Name: "Samosa", Price: "599", Image: "/somasa.jpg", Contact: "9998775265", City: "Gurugram", Description: "Crispy golden triangles filled with spicy potatoes 🥔" },
+    { S_No: "7", Resname: "Barbeque Nation", Name: "Noodle", Price: "199", Image: "/chomin.jpg", Contact: "9998775265", City: "Delhi", Description: "Soft and tangy noodles tossed with fresh veggies 🍜" },
+    { S_No: "8", Resname: "Giani's Ice Cream", Name: "Ice cream", Price: "599", Image: "/ice-cream.jpg", Contact: "9998775265", City: "Faridabad", Description: "Chilled scoops of creamy sweetness 🍫 " },
+    { S_No: "9", Resname: "Burger King", Name: "Raj kachori", Price: "599", Image: "/raj kachori.jpg", Contact: "8933587877", City: "Gurugram", Description: "Crispy shell filled with tangy curd and chutneys 🥗" },
+    { S_No: "10", Resname: "The Garden of Eat'n ", Name: "Manchurian", Price: "599", Image: "/manchurian.jpg", Contact: "9865745421", City: " Delhi", Description: "Crispy veggie balls in flavorful Indo- Chinese sauce 🍲" },
   ];
 
 
@@ -280,6 +280,7 @@ export default function FooditemsList() {
     }
     setLoading(false);
   }, []);
+  console.log("Good", newdata);
 
   const handleEdit = (index) => {
     setEditingIndex(index);
@@ -323,16 +324,17 @@ export default function FooditemsList() {
         }
       `}</style>
 
-      <div className="overflow-x-auto shadow-lg rounded-2xl border border-orange-300 bg-white/80 backdrop-blur-sm w-full max-w-5xl">
+      <div className="overflow-x-auto shadow-lg rounded-2xl border border-orange-300 bg-white/80 backdrop-blur-sm w-full max-w-6xl">
         <table className="min-w-full text-sm text-left text-gray-600">
           <thead className="bg-orange-500 text-white text-base">
             <tr>
               <th className="px-6 py-4">S.No</th>
+              <th className="px-6 py-4">Restaurants Name</th>
               <th className="px-6 py-4">Name</th>
               <th className="px-6 py-4">Price</th>
               <th className="px-6 py-4">Image</th>
               <th className="px-6 py-4">Location</th>
-               <th className="px-6 py-4">Contact no</th>
+              <th className="px-6 py-4">Contact no</th>
               <th className="px-6 py-4">Description</th>
               <th className="px-6 py-4">Operations</th>
             </tr>
@@ -342,6 +344,21 @@ export default function FooditemsList() {
             {newdata.map((item, index) => (
               <tr key={index} className="border-b hover:bg-orange-50 transition">
                 <td className="px-6 py-4">{index + 1}</td>
+
+
+                <td className="px-6 py-4 font-semibold text-gray-800">
+                  {editingIndex === index ? (
+                    <input
+                      type="text"   
+                      name="Resname"  // ✅ Correct name
+                      value={editedItem.Resname}
+                      onChange={handleChange}
+                      className="border border-gray-300 px-2 py-1 rounded-md w-full"
+                    />
+                  ) : (
+                    item.Resname
+                  )}
+                </td>
 
 
                 <td className="px-6 py-4 font-semibold text-gray-800">
@@ -357,6 +374,8 @@ export default function FooditemsList() {
                     item.Name
                   )}
                 </td>
+
+
 
                 <td className="px-6 py-4">
                   {editingIndex === index ? (
@@ -387,7 +406,7 @@ export default function FooditemsList() {
                     </div>
                   )}
                 </td>
-                  <td className="px-6 py-4">
+                <td className="px-6 py-4">
                   {editingIndex === index ? (
                     <input
                       type="text"
@@ -400,7 +419,7 @@ export default function FooditemsList() {
                     item.City
                   )}
                 </td>
-                    <td className="px-6 py-4">
+                <td className="px-6 py-4">
                   {editingIndex === index ? (
                     <input
                       type="text"

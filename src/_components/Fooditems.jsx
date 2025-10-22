@@ -8,6 +8,7 @@ export default function Fooditems({ setAddItems }) {
   const [city,setCity]=useState("");
   const [description, setDescription] = useState("");
   const [contact,setContact] = useState("");
+  const [resname,setResname] = useState("");
   const [error, setError] = useState(false);
 
   const handleAddFooditem = () => {
@@ -19,6 +20,7 @@ export default function Fooditems({ setAddItems }) {
     setError(false);
 
     const payload = {
+      Resname:resname,
       Name: name,
       Price: price,
       Image: path,
@@ -34,6 +36,7 @@ export default function Fooditems({ setAddItems }) {
     localStorage.setItem("food", JSON.stringify(updatedData));
 
     alert("Item added successfully!");
+    setResname("");
     setName("");
     setPrice("");
     setPath("");
@@ -75,6 +78,17 @@ export default function Fooditems({ setAddItems }) {
 
 `}</style>
         <form className="flex flex-col gap-5">
+             <label className="text-gray-700 animate-pulse-slow font-semibold">Restaurants Name  😋🍽️</label>
+          <input
+            type="text"
+            placeholder="Enter Restaurants Name"
+            value={name}
+            onChange={(e) => setResname(e.target.value)}
+            className="p-3 rounded-lg border border-gray-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 outline-none transition"
+          />
+          {error && !resname && (
+            <span className="text-red-700">Please enter a valid Restaurants Name</span>
+          )}
           <label className="text-gray-700 animate-pulse-slow font-semibold">Food Name 😋🍽️</label>
           <input
             type="text"
