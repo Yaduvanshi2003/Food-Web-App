@@ -31,20 +31,20 @@ export default function Login({ setLogin }) {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-gradient-to-br from-orange-100 via-white to-orange-200">
-      
-      {/* Left image panel for larger screens */}
-      <div className="hidden lg:flex lg:w-1/2 h-screen relative">
+
+      {/* Image panel — now visible on all screens */}
+      <div className="relative w-full lg:w-1/2 h-64 sm:h-80 md:h-96 lg:h-screen">
         <Image
           src="/restaurant-bg1.jpg"
           alt="Indian Food"
           fill
-          className="object-cover brightness-90"
+          className="object-cover brightness-90 rounded-b-3xl lg:rounded-none"
         />
-        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-12 text-center">
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent animate-wave">
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-6 sm:px-10 text-center">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3 bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent animate-wave">
             Indian Food
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 max-w-md">
+          <p className="text-base sm:text-lg md:text-xl text-gray-100 max-w-md">
             Partner with India’s favorite restaurant brand. Grow your business and reach thousands of customers daily.
           </p>
         </div>
