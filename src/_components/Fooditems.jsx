@@ -8,8 +8,8 @@ export default function Fooditems({ setAddItems }) {
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [resname, setResname] = useState("");
+  const [sprice, setSprice] = useState("");
   const [error, setError] = useState(false);
-
   const handleAddFooditem = () => {
     if (!name || !price || !path || !city || !description) {
       setError(true);
@@ -21,6 +21,7 @@ export default function Fooditems({ setAddItems }) {
       Resname: resname,
       Name: name,
       Price: price,
+      Sprice: sprice,
       Image: path,
       City: city,
       Contact: contact,
@@ -35,6 +36,7 @@ export default function Fooditems({ setAddItems }) {
     setResname("");
     setName("");
     setPrice("");
+    setSprice("");
     setPath("");
     setCity("");
     setContact("");
@@ -106,6 +108,18 @@ export default function Fooditems({ setAddItems }) {
           />
           {error && !price && (
             <span className="text-red-700 text-sm sm:text-base">Please enter a valid price</span>
+          )}
+
+             <label className="text-gray-700 font-semibold animate-pulse-slow"> Sale Price 🏷️💰</label>
+          <input
+            type="number"
+            placeholder="Enter food Sale Price"
+            value={sprice}
+            onChange={(e) => setPrice(e.target.value)}
+            className="p-2 sm:p-3 rounded-lg border border-gray-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 outline-none transition"
+          />
+          {error && !price && (
+            <span className="text-red-700 text-sm sm:text-base">Please enter a valid Sale Price</span>
           )}
 
           <label className="text-gray-700 font-semibold animate-pulse-slow">Image Path 🖼️</label>

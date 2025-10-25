@@ -29,19 +29,28 @@ export default function Home() {
     }, 800);
   };
 
-  const uniqueCities = Array.from(new Set(data.map((item) => item.City)));
 
-  const filteredRestaurants = data.filter((item) => {
-    const matchCity = search
-      ? item.City?.toLowerCase().includes(search.toLowerCase())
-      : true;
 
-    const matchFood = foodSearch
-      ? item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
-      : true;
+const uniqueCities = Array.from(new Set(data.map((item) => item.City)));
 
-    return matchCity && matchFood;
-  });
+const filteredRestaurants = Array.from(
+  new Map(
+    data
+      .filter((item) => {
+        const matchCity = search
+          ? item.City?.toLowerCase().includes(search.toLowerCase())
+          : true;
+
+        const matchFood = foodSearch
+          ? item.Name?.toLowerCase().includes(foodSearch.toLowerCase())
+          : true;
+
+        return matchCity && matchFood;
+      })
+      .map((item) => [item.Resname, item]) // use Resname as unique key
+  ).values()
+);
+
 
   const filteredFood = data
     .filter((item) =>
@@ -181,7 +190,7 @@ export default function Home() {
                 <h1 className="text-xl font-bold text-orange-700 tracking-wide">
                   {item.Resname}
                 </h1>
-                <h2 className="text-lg font-semibold text-green-600">{item.Name}</h2>
+                {/* <h2 className="text-lg font-semibold text-green-600">{item.Name}</h2> */}
                 <h3 className="text-gray-700 font-medium">Location: {item.City}</h3>
 
                 <div className="flex items-center space-x-2">
@@ -189,10 +198,10 @@ export default function Home() {
                   <span className="text-gray-600">{item.Contact}</span>
                 </div>
 
-                <h3 className="text-lg font-medium text-red-500">Price: ₹{item.Price}</h3>
+                {/* <h3 className="text-lg font-medium text-red-500">Price: ₹{item.Price}</h3> */}
               </div>
 
-              <div className="ml-6 flex-shrink-0">
+              {/* <div className="ml-6 flex-shrink-0">
                 <Image
                   src={
                     item.Image?.startsWith("/") ? item.Image : "/burger.png"
@@ -202,7 +211,7 @@ export default function Home() {
                   alt={item.Name || "Food"}
                   className="w-24 h-24 rounded-lg object-cover shadow-sm"
                 />
-              </div>
+              </div> */}
             </div>
           ))
         ) : (

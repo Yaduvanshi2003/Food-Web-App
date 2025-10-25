@@ -83,13 +83,18 @@ export default function Page() {
                           <span className="text-gray-700">{item.Contact}</span>
                         </div>
 
-                        <div className="mt-4 text-lg font-bold flex items-center justify-center md:justify-start gap-2">
+                        <div className="mt-2 text-lg font-bold flex items-center justify-center md:justify-start gap-2">
                           <span className="text-black">Price:</span>
-                          <span className="line-through text-xl text-gray-600">
+                          <span className="line-through text-3xl text-gray-600">
                             ₹{item.Price}
                           </span>
-                          <span className="text-red-600 text-xl">₹299</span>
+                          <span className="text-red-600 text-4xl">{item.Sprice}</span>
                         </div>
+                        <button type="button" className="bg-orange-600 rounded-2xl text-center font-bold text-white cursor-pointer py-2 px-6 hover:bg-yellow-700  shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"> 
+                          Add To Cart
+                          </button>
+                       
+
                       </div>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ export default function UpdateFooditems({ setAddItems }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [path, setPath] = useState("");
+   const [sprice, setSprice] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
 
@@ -19,6 +20,7 @@ export default function UpdateFooditems({ setAddItems }) {
     const payload = {
       Name: name,
       Price: price,
+      Sprice: sprice,
       Image: path,
       Description: description,
     };
@@ -26,6 +28,7 @@ export default function UpdateFooditems({ setAddItems }) {
     alert("Item added successfully!");
     setName("");
     setPrice("");
+    setSprice("");
     setPath("");
     setDescription("");
     setAddItems(false);
@@ -61,6 +64,19 @@ export default function UpdateFooditems({ setAddItems }) {
           />
           {error && !price && (
             <span className="text-red-700">Please enter a valid price</span>
+          )}
+
+
+           <label className="text-gray-700 font-semibold animate-pulse-slow">Sale Price (₹)</label>
+          <input
+            type="text"
+            placeholder="Enter food Sale Price"
+            value={sprice}
+            onChange={(e) => setPrice(e.target.value)}
+            className="p-3 rounded-lg border border-gray-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 outline-none transition"
+          />
+          {error && !price && (
+            <span className="text-red-700">Please enter a valid Sale Price</span>
           )}
 
           <label className="text-gray-700 font-semibold animate-pulse-slow">Image Path</label>
