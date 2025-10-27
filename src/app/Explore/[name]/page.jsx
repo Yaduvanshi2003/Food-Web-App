@@ -7,6 +7,7 @@ import Image from "next/image";
 export default function Page() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cartData, setCartData] = useState("");
   const params = useParams();
   const name = decodeURIComponent(params.name || "");
 
@@ -23,9 +24,14 @@ export default function Page() {
     ? data.filter((item) => item.Resname === name)
     : [];
 
+  const AddToCart = (item) => {
+
+    setCartData(item)
+
+  }
   return (
     <div>
-      <CastumerHeader />
+      <CastumerHeader cartData={cartData}/>
       <div className="flex flex-col items-center justify-center flex-grow bg-black/40 backdrop-blur-sm py-20 px-6 bg-[url('/123.jpg')] bg-cover bg-center min-h-screen">
         <div className="transform -translate-y-10 md:-translate-y-16">
           <h1 className="text-5xl md:text-6xl font-extrabold text-orange-600 animate-wave mb-12 text-center drop-shadow-lg">
@@ -90,10 +96,13 @@ export default function Page() {
                           </span>
                           <span className="text-red-600 text-4xl">{item.Sprice}</span>
                         </div>
-                        <button type="button" className="bg-orange-600 rounded-2xl text-center font-bold text-white cursor-pointer py-2 px-6 hover:bg-yellow-700  shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"> 
+                        <button 
+                        onClick={()=>AddToCart(item)}
+                        
+                        className="bg-orange-600 rounded-2xl text-center font-bold text-white cursor-pointer py-2 px-6 hover:bg-yellow-700  shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
                           Add To Cart
-                          </button>
-                       
+                        </button>
+
 
                       </div>
                     </div>
