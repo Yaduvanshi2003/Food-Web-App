@@ -8,17 +8,44 @@ export default function Page() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cartData, setCartData] = useState("");
+  // const [cartStorage,setCartStorage]=useState(JSON.parse(localStorage.getItem('cart')) || []);
+  // const [cartName,setCartName]=useState(()=>cartStorage.map((item,index)=>{
+  //   return item.Name
+
+
+
+  // }))
+
+
+
+ const [cartStorage, setCartStorage] = useState([]); // start empty
+  const [cartName, setCartName] = useState([]);
+  useEffect(() => {
+    // this runs only in browser
+    setLoading(true)
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartStorage(savedCart);
+    setCartName(savedCart.map((item) => item.Name));
+    setLoading(false)
+    console.log("savedCart",savedCart);
+  }, []);
+
+
+
   const params = useParams();
   const name = decodeURIComponent(params.name || "");
+  // console.log("cartName",cartName,);
 
   useEffect(() => {
     setLoading(true);
+    
     setTimeout(() => {
       const user = JSON.parse(localStorage.getItem("food")) || [];
       setData(user);
       setLoading(false);
     }, 800);
   }, []);
+
 
   const selectedResData = Array.isArray(data)
     ? data.filter((item) => item.Resname === name)
@@ -97,6 +124,7 @@ export default function Page() {
                           <span className="text-red-600 text-4xl">{item.Sprice}</span>
                         </div>
                         <button 
+                        type="submit"
                         onClick={()=>AddToCart(item)}
                         
                         className="bg-orange-600 rounded-2xl text-center font-bold text-white cursor-pointer py-2 px-6 hover:bg-yellow-700  shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">

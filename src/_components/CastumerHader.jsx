@@ -27,7 +27,7 @@ export default function CastumerHeader(props) {
   // Handle cart updates when props.cartData changes
   useEffect(() => {
     if (props.cartData) {
-      console.log(props);
+      
       if (cartNumber) {
         if (CartItem[0]?.Resname !== props.cartData.Resname) {
           localStorage.removeItem("cart");
